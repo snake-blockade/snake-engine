@@ -1,9 +1,10 @@
-package io.zentae.snake.engine.handle;
+package io.zentae.snake.engine.handler;
 
 import io.zentae.snake.engine.movement.Movement;
 import jakarta.annotation.Nullable;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class AIGameHandler implements GameHandler {
 
@@ -14,9 +15,8 @@ public class AIGameHandler implements GameHandler {
     }
 
     @Override
-    public Movement await() {
-        // todo mettre le move décidé par l'IA ici.
-        return Movement.UP;
+    public void await(Consumer<Movement> consumer) {
+        consumer.accept(Movement.UP);
     }
 
     @Override

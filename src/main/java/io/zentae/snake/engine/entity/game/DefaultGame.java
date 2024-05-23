@@ -2,7 +2,7 @@ package io.zentae.snake.engine.entity.game;
 
 import io.zentae.snake.engine.entity.arena.Arena;
 import io.zentae.snake.engine.entity.player.Player;
-import io.zentae.snake.engine.handle.GameHandler;
+import io.zentae.snake.engine.handler.GameHandler;
 import jakarta.annotation.Nonnull;
 
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class DefaultGame implements Game {
 
     @Override
     @Nonnull
-    public GameHandler getGameMode() {
+    public GameHandler getGameHandler() {
         return this.gameMode;
     }
 

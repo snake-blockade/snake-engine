@@ -16,8 +16,6 @@ public class SnakeMoveListener extends Listener<SnakeMoveEvent> {
 
     public SnakeMoveListener() {
         super(SnakeMoveEvent.class);
-        // subscribe to the events.
-        EventBus.subscribe(SnakeMoveEvent.class, this);
     }
 
     @Override

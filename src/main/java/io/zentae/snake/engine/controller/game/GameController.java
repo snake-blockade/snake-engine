@@ -22,4 +22,16 @@ public interface GameController {
      * @return the {@link Game} that is being controlled.
      */
     Game getGame();
+
+    /**
+     * Sets the death type. null if none has been set.
+     * @param deathType the new death type.
+     */
+    @Nullable
+    void setDeathType(DeathType deathType);
+
+    /**
+     * @return the {@link DeathType} of the player.
+     */
+    DeathType getDeathType();
 }

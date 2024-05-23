@@ -8,8 +8,6 @@ public class CollisionListener extends Listener<CollisionEvent> {
 
     public CollisionListener() {
         super(CollisionEvent.class);
-        // subscribe to collisions.
-        EventBus.subscribe(CollisionEvent.class, this);
     }
 
     @Override
