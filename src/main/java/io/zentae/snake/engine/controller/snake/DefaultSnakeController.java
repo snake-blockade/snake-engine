@@ -15,7 +15,7 @@ public class DefaultSnakeController implements SnakeController {
     }
 
     @Override
-    public void move(@Nonnull Movement movement) {
+    public void move(Movement movement) {
         // loop through each body part.
         for(int i = snake.getBody().size() - 1; i > 0; i--) {
             // retrieve the next body part.

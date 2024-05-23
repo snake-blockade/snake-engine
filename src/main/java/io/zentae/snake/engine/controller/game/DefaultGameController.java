@@ -29,6 +29,7 @@ public class DefaultGameController implements GameController {
 
     @Override
     public void next(@Nonnull Movement movement) {
+        // get snake controller.
         SnakeController snakeController = getCurrentPlayer().getController();
         // predict the movement.
         Location prediction = snakeController.predict(movement);
