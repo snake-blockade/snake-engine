@@ -2,11 +2,14 @@ package io.zentae.snake.engine.entity.game;
 
 import io.zentae.snake.engine.entity.arena.Arena;
 import io.zentae.snake.engine.entity.player.Player;
+import io.zentae.snake.engine.handler.GameHandler;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
 public interface Game {
+
+    GameHandler getGameHandler();
 
     /**
      * @return every N laps it should make the snakes grow.

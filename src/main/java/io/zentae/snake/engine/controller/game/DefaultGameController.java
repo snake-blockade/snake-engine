@@ -15,9 +15,12 @@ import io.zentae.snake.engine.event.snake.SnakeGrowEvent;
 import io.zentae.snake.engine.event.snake.SnakeMoveEvent;
 import io.zentae.snake.engine.movement.Movement;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class DefaultGameController implements GameController {
 
+    // get death type.
+    private DeathType deathType;
     // the game.
     private final Game game;
     // the current player index.
@@ -29,6 +32,7 @@ public class DefaultGameController implements GameController {
 
     @Override
     public void next(@Nonnull Movement movement) {
+        // get snake controller.
         SnakeController snakeController = getCurrentPlayer().getController();
         // predict the movement.
         Location prediction = snakeController.predict(movement);
@@ -49,8 +53,9 @@ public class DefaultGameController implements GameController {
                 || prediction.getY() >= arena.getWidth())
                 || prediction.getX() < 0
                 || prediction.getY() < 0) {
+            // set death type.
+            this.setDeathType(DeathType.ARENA_EXIT);
             // update the game-state.
-            System.out.println("IL EST SORTI");
             this.end();
             return;
         }
@@ -87,5 +92,16 @@ public class DefaultGameController implements GameController {
     private Player getCurrentPlayer() {
         // avoid out of bound exception.
         return game.getPlayers().get(playerIndex % game.getPlayers().size());
+    }
+
+    @Nullable
+    @Override
+    public void setDeathType(DeathType deathType) {
+        this.deathType = deathType;
+    }
+
+    @Override
+    public DeathType getDeathType() {
+        return this.deathType;
     }
 }

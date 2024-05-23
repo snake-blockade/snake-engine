@@ -9,7 +9,6 @@ public class SnakeGrowListener extends Listener<SnakeGrowEvent> {
 
     public SnakeGrowListener() {
         super(SnakeGrowEvent.class);
-        EventBus.subscribe(SnakeGrowEvent.class, this);
     }
 
     @Override

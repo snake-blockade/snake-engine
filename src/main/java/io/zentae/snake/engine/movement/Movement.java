@@ -1,15 +1,21 @@
 package io.zentae.snake.engine.movement;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 public enum Movement {
 
     // This enum avoids illegal movements such as diagonals.
-    UP(0, -1), DOWN(0, 1),
-    LEFT(-1, 0), RIGHT(1, 0);
+    UP("U", 0, -1), DOWN("D", 0, 1),
+    LEFT("L", -1, 0), RIGHT("R", 1, 0),
+    NONE("NONE", 0, 0);
 
+    private final String channelInitial;
     private final int x;
     private final int y;
 
-    Movement(int x, int y) {
+    Movement(String channelInitial, int x, int y) {
+        this.channelInitial = channelInitial;
         this.x = x;
         this.y = y;
     }
@@ -20,5 +26,23 @@ public enum Movement {
 
     public int getY() {
         return this.y;
+    }
+
+    public String getChannelInitial() {
+        return this.channelInitial;
+    }
+
+    /**
+     * Gets a movement by its initial, returns null if no movement matches.
+     * @param initial the initial of the movement.
+     * @return the matching <code>{@link Movement}</code> of the given initial.
+     */
+    @Nullable
+    public static Movement byInitial(@Nonnull String initial) {
+        for(Movement movement : values()) {
+            if(movement.channelInitial.equals(initial))
+                return movement;
+        }
+        return null;
     }
 }

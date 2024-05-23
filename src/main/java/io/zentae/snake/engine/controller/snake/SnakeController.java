@@ -9,7 +9,6 @@ public interface SnakeController {
 
     /**
      * Make the controlled {@link Snake} move.
-     * @param movement tbe {@link Movement} to apply.
      */
     void move(Movement movement);
 

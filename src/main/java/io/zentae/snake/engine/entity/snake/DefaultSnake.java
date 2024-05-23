@@ -1,5 +1,6 @@
 package io.zentae.snake.engine.entity.snake;
 
+import io.zentae.snake.engine.controller.game.DeathType;
 import io.zentae.snake.engine.controller.game.GameController;
 import io.zentae.snake.engine.entity.ArenaEntity;
 import io.zentae.snake.engine.entity.Location;
@@ -44,20 +45,22 @@ public class DefaultSnake implements Snake {
         if(other instanceof Snake snake) {
             // check if it's the same snake.
             if(snake.equals(this) && this.getBody().size() > 2) {
-                System.out.println("IL S'EST MANGE");
+                // set death type.
+                game.setDeathType(DeathType.EAT_SELF);
                 // end the game.
                 game.end();
             } else if(!snake.equals(this)){
-                System.out.println("IL EST DANS UN AUTRE !");
+                // set death type.
+                game.setDeathType(DeathType.HIT_OTHER_SNAKE);
                 game.end();
             }
         } else if (other instanceof Fruit) {
-            System.out.println("IL A GRAILLE UN FRUIT !");
             this.getBody().remove(this.getTail());
             // despawn the fruit.
             game.getGame().getArena().unregister(other);
         } else if(other instanceof Obstacle) {
-            System.out.println("IL S'EST MANGE UN OBSTACLE");
+            // set death type.
+            game.setDeathType(DeathType.HIT_OBSTACLE);
             game.end();
         }
     }
