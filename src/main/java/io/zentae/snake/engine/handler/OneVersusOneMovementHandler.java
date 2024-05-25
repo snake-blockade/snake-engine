@@ -18,6 +18,7 @@ public class OneVersusOneMovementHandler implements MovementHandler {
 
     @Override
     public void await(@Nonnull GameController arena, @Nonnull Consumer<Movement> consumer) {
+        // should never be called as we do not need to wait for a move, as both moves comes from an input, which only triggers Movement#play.
         consumer.accept(Movement.NONE);
     }
 
