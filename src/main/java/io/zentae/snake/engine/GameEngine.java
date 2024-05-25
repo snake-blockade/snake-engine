@@ -2,7 +2,7 @@ package io.zentae.snake.engine;
 
 import io.zentae.snake.engine.controller.game.GameController;
 import io.zentae.snake.engine.entity.game.Game;
-import io.zentae.snake.engine.handler.GameHandler;
+import io.zentae.snake.engine.handler.MovementHandler;
 import io.zentae.snake.engine.handler.GameType;
 import io.zentae.snake.engine.io.ProtocolCoordinator;
 import io.zentae.snake.engine.movement.Movement;
@@ -10,6 +10,8 @@ import jakarta.annotation.Nonnull;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameEngine {
 
@@ -18,9 +20,12 @@ public class GameEngine {
 
     private static GameType GAME_TYPE;
     private static GameController CONTROLLER;
+    // don't need to shut down since it will restore automatically.
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newSingleThreadExecutor();
+
     private GameEngine(GameType gameType, GameController controller) {
         CONTROLLER = controller;
-        GAME_TYPE = GAME_TYPE;
+        GAME_TYPE = gameType;
         GAME_ENGINE = this;
     }
 
@@ -39,24 +44,25 @@ public class GameEngine {
         // get game.
         Game game = CONTROLLER.getGame();
         // get game mode.
-        GameHandler gameHandler = game.getGameHandler();
+        MovementHandler movementHandler = game.getGameHandler();
         // get definitive movement that needs to be played.
-        movement = gameHandler.play(Optional.ofNullable(movement));
+        movement = movementHandler.play(CONTROLLER, Optional.ofNullable(movement));
         // play the move.
         CONTROLLER.next(movement);
         // if it's a LAN party, then send the data to the opponent.
-        if(GAME_TYPE == GameType.LAN) ProtocolCoordinator.get().send(movement);
+        if(GAME_TYPE == GameType.LAN)
+            ProtocolCoordinator.get().send(movement);
         // check if the game handler awaits for another move. if so, wait for the move and play it.
-        if(awaits && gameHandler.needsNextMove()) {
+        if(awaits && movementHandler.needsNextMove()) {
             // set the waiting for move as true.
             WAITS_NEXT_MOVE = true;
             // send the request and wait.
-            gameHandler.await(opponentMovement -> {
+            EXECUTOR_SERVICE.execute(() -> movementHandler.await(CONTROLLER, opponentMovement -> {
                 // play the move.
                 CONTROLLER.next(opponentMovement);
                 // set the waiting time to false.
                 WAITS_NEXT_MOVE = false;
-            });
+            }));
         }
     }
 
@@ -72,7 +78,7 @@ public class GameEngine {
         if(gameType == GameType.LAN)
             ProtocolCoordinator.get().getOpponentMove(future::complete);
         if(gameType == GameType.LOCAL_AI)
-            CONTROLLER.getGame().getGameHandler().await(future::complete);
+            CONTROLLER.getGame().getGameHandler().await(CONTROLLER, future::complete);
         // set as waiting for opponent's move.
         WAITS_NEXT_MOVE = true;
         // wait for the callback.

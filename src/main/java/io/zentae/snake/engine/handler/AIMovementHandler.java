@@ -1,7 +1,7 @@
 package io.zentae.snake.engine.handler;
 
+import io.zentae.snake.engine.algorithm.SnakeAlgorithm;
 import io.zentae.snake.engine.controller.game.GameController;
-import io.zentae.snake.engine.io.ProtocolCoordinator;
 import io.zentae.snake.engine.movement.Movement;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -9,17 +9,19 @@ import jakarta.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class LANHandler implements MovementHandler {
+public class AIMovementHandler implements MovementHandler {
+
+    private final SnakeAlgorithm algorithm = new SnakeAlgorithm();
 
     @Nullable
     @Override
-    public Movement play(@Nonnull GameController arena, @Nonnull Optional<Movement> potentialInput) {
+    public Movement play(@Nonnull GameController game, @Nonnull Optional<Movement> potentialInput) {
         return potentialInput.orElse(null);
     }
 
     @Override
-    public void await(@Nonnull GameController arena, @Nonnull Consumer<Movement> consumer) {
-        ProtocolCoordinator.get().getOpponentMove(consumer);
+    public void await(@Nonnull GameController game, @Nonnull Consumer<Movement> consumer) {
+        consumer.accept(algorithm.process(game));
     }
 
     @Override

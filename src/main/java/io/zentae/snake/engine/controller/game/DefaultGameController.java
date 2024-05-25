@@ -15,7 +15,6 @@ import io.zentae.snake.engine.event.snake.SnakeGrowEvent;
 import io.zentae.snake.engine.event.snake.SnakeMoveEvent;
 import io.zentae.snake.engine.movement.Movement;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class DefaultGameController implements GameController {
 
@@ -89,12 +88,13 @@ public class DefaultGameController implements GameController {
         return this.game;
     }
 
-    private Player getCurrentPlayer() {
+    @Override
+    @Nonnull
+    public Player getCurrentPlayer() {
         // avoid out of bound exception.
         return game.getPlayers().get(playerIndex % game.getPlayers().size());
     }
 
-    @Nullable
     @Override
     public void setDeathType(DeathType deathType) {
         this.deathType = deathType;

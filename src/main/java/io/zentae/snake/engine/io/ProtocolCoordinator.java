@@ -1,7 +1,6 @@
 package io.zentae.snake.engine.io;
 
 import io.zentae.snake.engine.movement.Movement;
-import jakarta.annotation.Nullable;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -34,7 +33,6 @@ public class ProtocolCoordinator {
         }
     }
 
-    @Nullable
     public void getOpponentMove(Consumer<Movement> consumer) {
         // use multithreading to avoid blocking the main thread : the Channel class can cause deadlocks on the main thread, which can be problematic.
         this.executorService.execute(() -> {
@@ -75,7 +73,6 @@ public class ProtocolCoordinator {
         return PROTOCOL_COORDINATOR == null ? new ProtocolCoordinator(writerChannel, readerChannel) : PROTOCOL_COORDINATOR;
     }
 
-    @Nullable
     public static ProtocolCoordinator get() {
         if(PROTOCOL_COORDINATOR == null)
             throw new RuntimeException("The protocol coordinator has not been loaded yet !");

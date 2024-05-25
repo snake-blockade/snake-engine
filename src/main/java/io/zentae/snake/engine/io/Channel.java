@@ -12,7 +12,7 @@ import java.util.Queue;
 import java.util.Random;
 
 /**
- * This class comes from the project : https://git.lacl.fr/cervelle/padiflac by Julien Cervelle
+ * This class is from by Julien Cervelle
  * The field names have been modified in order to respect java's naming convention.
  */
 public class Channel<T> {
@@ -129,32 +129,6 @@ public class Channel<T> {
 		}
 	}
 	private static final byte[] OK = {'O','K'};
-
-	private static String escape(String s) {
-		StringBuilder str = new StringBuilder();
-		var c = s.codePoints();
-		c.forEachOrdered(i -> {
-			if (Character.isISOControl(i)) {
-				str.append("\\").append(String.format("%03o",i));
-			} else {
-				str.append(Character.toString(i));
-			}
-		});
-		return str.toString();
-	}
-
-	public static void testString() throws IOException, ClassNotFoundException {
-		Channel<String> c = new Channel<>("ChatTest");
-		for(;;) {
-			System.out.println(escape(c.getNext()));
-		}
-	}
-
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		//testObject();
-		testString();
-	}
-
 
 }
 

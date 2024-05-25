@@ -40,6 +40,11 @@ public interface Arena {
     Collection<Location> getOccupiedSegments();
 
     /**
+     * @return all the free {@link Location}.
+     */
+    Collection<Location> getFreeSegments();
+
+    /**
      * @return all the {@link ArenaEntity} within the {@link Arena}.
      */
     @Nonnull

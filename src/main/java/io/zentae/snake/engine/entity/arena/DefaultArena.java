@@ -65,6 +65,20 @@ public class DefaultArena implements Arena {
         return buffer;
     }
 
+    @Override
+    public Collection<Location> getFreeSegments() {
+        List<Location> locationBuffer = new ArrayList<>();
+        for(int x = 0; x < getLength(); x++) {
+            for(int y = 0; y < getWidth(); y++) {
+                locationBuffer.add(new Location(x, y));
+            }
+        }
+        // remove all occupied segments.
+        locationBuffer.removeAll(getOccupiedSegments());
+        // return the buffer.
+        return locationBuffer;
+    }
+
     @Nonnull
     @Override
     public Collection<ArenaEntity> getObjects() {

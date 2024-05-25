@@ -2,7 +2,7 @@ package io.zentae.snake.engine.entity.game;
 
 import io.zentae.snake.engine.entity.arena.Arena;
 import io.zentae.snake.engine.entity.player.Player;
-import io.zentae.snake.engine.handler.GameHandler;
+import io.zentae.snake.engine.handler.MovementHandler;
 import jakarta.annotation.Nonnull;
 
 import java.util.Collections;
@@ -11,7 +11,7 @@ import java.util.List;
 public class DefaultGame implements Game {
 
     // the current game mode.
-    private final GameHandler gameMode;
+    private final MovementHandler gameMode;
     // the actual lap.
     private int lap = 0;
     // the number of laps between each the snakes should grow.
@@ -23,7 +23,7 @@ public class DefaultGame implements Game {
     // the players.
     private final List<Player> players;
 
-    public DefaultGame(@Nonnull GameHandler gameMode, @Nonnull Arena arena, @Nonnull List<Player> players,
+    public DefaultGame(@Nonnull MovementHandler gameMode, @Nonnull Arena arena, @Nonnull List<Player> players,
                        int lapGrow) {
         this.gameMode = gameMode;
         this.arena = arena;
@@ -34,7 +34,7 @@ public class DefaultGame implements Game {
 
     @Override
     @Nonnull
-    public GameHandler getGameHandler() {
+    public MovementHandler getGameHandler() {
         return this.gameMode;
     }
 
