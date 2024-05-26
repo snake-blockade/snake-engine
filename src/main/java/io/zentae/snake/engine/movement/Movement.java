@@ -35,12 +35,27 @@ public enum Movement {
     /**
      * Gets a movement by its initial, returns null if no movement matches.
      * @param initial the initial of the movement.
-     * @return the matching <code>{@link Movement}</code> of the given initial.
+     * @return the matching {@link Movement} of the given initial.
      */
     @Nullable
     public static Movement byInitial(@Nonnull String initial) {
         for(Movement movement : values()) {
             if(movement.channelInitial.equals(initial))
+                return movement;
+        }
+        return null;
+    }
+
+    /**
+     * Returns a {@link Movement} by its coordinates.
+     * @param x the {@link Movement}'s x coordinate.
+     * @param y the {@link Movement}'s y coordinate.
+     * @return a {@link Movement} by its coordinates.
+     */
+    @Nullable
+    public static Movement byOrientation(int x, int y) {
+        for(Movement movement : values()) {
+            if(movement.getX() == x && movement.getY() == y)
                 return movement;
         }
         return null;
