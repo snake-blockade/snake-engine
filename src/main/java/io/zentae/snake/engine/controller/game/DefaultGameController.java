@@ -58,14 +58,14 @@ public class DefaultGameController implements GameController {
             this.end();
             return;
         }
-        // make the snake move.
-        snakeController.move(movement);
         // check if we need to make the player grow.
         if(this.game.getLap() % this.game.getLapGrow() == 0
                 && this.game.getLap() != 0) {
             // dispatch event.
             EventBus.dispatch(new SnakeGrowEvent(this, snakeController));
         }
+        // make the snake move.
+        snakeController.move(movement);
         // increase player index.
         this.playerIndex++;
         // check if all the players has played.
