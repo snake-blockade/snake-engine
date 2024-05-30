@@ -55,12 +55,12 @@ public class DefaultSnake implements Snake {
                 game.end();
             }
         } else if (other instanceof Fruit) {
+            // despawn the fruit.
+            game.getGame().getArena().unregister(other);
             // check if body is lower (or equal) than 2. if so, we don't remove anything from the player's body as it would result in a one pixel snake.
             if(this.getBody().size() <= 2)
                 return;
             this.getBody().remove(this.getTail());
-            // despawn the fruit.
-            game.getGame().getArena().unregister(other);
         } else if(other instanceof Obstacle) {
             // set death type.
             game.setDeathType(DeathType.HIT_OBSTACLE);
