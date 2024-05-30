@@ -2,7 +2,6 @@ package io.zentae.snake.engine.listener;
 
 import io.zentae.snake.engine.controller.snake.SnakeController;
 import io.zentae.snake.engine.entity.Location;
-import io.zentae.snake.engine.event.EventBus;
 import io.zentae.snake.engine.event.snake.SnakeGrowEvent;
 
 public class SnakeGrowListener extends Listener<SnakeGrowEvent> {
